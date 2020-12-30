@@ -7,13 +7,13 @@ class UserState:
         self.st_x
         self.st_y
 
-    def isEvnet(self):
+    def is_evnet(self):
         """
         event 발생 여부
         1. 몬스터 만났을 때
         2. 아이템을 얻었을 때
         """
-    def legalMoves(self):
+    def legal_moves(self):
         """
         이동키를 입력 받았을 때 이동 가능한 곳 인지 확인
         'up' 'down' 'left' 'right'

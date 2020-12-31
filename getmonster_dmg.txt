@@ -1,0 +1,2 @@
+def getmonster_dmg(mob_id):
+    return mob[mob_id][2]

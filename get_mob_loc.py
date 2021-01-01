@@ -2,13 +2,13 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 def get_mob_loc(map):
-    n = len(List)
-    m = len(List[0])
+    n = len(map)
+    m = len(map[0])
 
     newlist = []
     for i in range(n):
         for j in range(m):
-            if List[i][j] == 2:
+            if map[i][j] == 2:
                 newlist.append([i, j])
 
     print(newlist)

@@ -5,7 +5,7 @@ class UserState:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        self.background = pg.display.set_mode((400,400))
+        #self.background = pg.display.get_num_displays()
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         self.running = True
@@ -20,10 +20,11 @@ class UserState:
         with open('map_file', 'r') as file:
             for line in file:
                 self.usermap.append(line.strip('\n').split(' '))
-        # self.st_x = 44
-        # self.st_y = 38
         self.st_x = 5
-        self.st_y = 5
+        self.st_y = 16
+        self.player_pos = [5,5]
+        self.game_state = {}
+        self.game_state['player_pos'] = self.player_pos
 
     def new(self):
         self.all_sprites = pg.sprite.Group()
@@ -60,13 +61,6 @@ class UserState:
         """
 
     def legal_moves(self):
-        """
-        이동키를 입력 받았을 때 이동 가능한 곳 인지 확인
-        'up' 'down' 'left' 'right'
-        벽이라면 이동 불가능, 이벤트 발생 여부 체크?
-        게임을 끝내고 싶을 때
-        :return: True/False
-        """
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.playing = False
@@ -89,7 +83,7 @@ class UserState:
         self.screen.fill(WHITE)
         for col in range(len(self.usermap)):
             for row in range(len(self.usermap)):
-                if self.usermap[col][row] == "0":
+                if self.usermap[col][row] == "0" or self.usermap[col][row] == "3":
                     road = Road(col, row)
                     self.road_dic[(col,row)] = road
 
@@ -113,33 +107,46 @@ class UserState:
         2.캐릭터 좌표 기준(센터)+_5 화면 출력
         3.화면이 경계선을 넘어가면 캐릭터만 이동?
         """
-        self.p_lx = max(self.st_x - 5, 0)
-        self.p_rx = min(self.st_x + 5, len(self.usermap))
-        self.p_ly = max(self.st_y - 5, 0)
-        self.p_ry = min(self.st_y + 5, len(self.usermap))
 
         self.road.empty()
         self.wall.empty()
         self.enemys.empty()
         self.screen.fill(WHITE)
 
-        for col in range(self.player.rect.y//40-5, self.player.rect.y//40+5):
-            for row in range(self.player.rect.x//40-5, self.player.rect.x//40+5):
-                if (col,row) in self.road_dic.keys():
-                    self.road.add(self.road_dic[(col,row)])
-                elif (col,row) in self.wall_dic.keys():
+        pos_y = self.player.rect.y
+        pos_x = self.player.rect.x
+
+        for col in range(pos_y//40-5, pos_y//40+6):
+            for row in range(pos_x//40-5, pos_x//40+6):
+                if (col,row) == (pos_y//40, pos_x//40):
+                    self.player.rect.y, self.player.rect.x = 200, 200
+                elif (col, row) in self.road_dic.keys():
+                    self.road_dic[(col, row)].update(col-(pos_y//40-5), row-(pos_x//40-5))
+                    self.road.add(self.road_dic[(col, row)])
+                elif (col, row) in self.wall_dic.keys():
+                    self.wall_dic[(col, row)].update(col-(pos_y//40-5), row-(pos_x//40-5))
                     self.wall.add(self.wall_dic[(col, row)])
                 elif (col, row) in self.enemys_dic.keys():
+                    self.enemys_dic[(col, row)].update(col-(pos_y//40-5), row-(pos_x//40-5))
                     self.enemys.add(self.enemys_dic[(col, row)])
 
-        
-
-        self.road.draw(self.background)
-        self.wall.draw(self.background)
-        self.enemys.draw(self.background)
-        self.explo.draw(self.background)
-        self.screen.blit(self.background,(0,0))
+        self.road.draw(self.screen)
+        self.wall.draw(self.screen)
+        self.enemys.draw(self.screen)
+        self.explo.draw(self.screen)
         pg.display.update()
+        self.player.rect.y = pos_y
+        self.player.rect.x = pos_x
+
+        for col in range(pos_y//40-5, pos_y//40+6):
+            for row in range(pos_x//40-5, pos_x//40+6):
+                if (col, row) in self.road_dic.keys():
+                    self.road_dic[(col, row)].update(col, row)
+                elif (col, row) in self.wall_dic.keys():
+                    self.wall_dic[(col, row)].update(col, row)
+                elif (col, row) in self.enemys_dic.keys():
+                    self.enemys_dic[(col, row)].update(col, row)
+
  
 class Enemy(pg.sprite.Sprite):
     def __init__(self, col, row, game):
@@ -152,18 +159,12 @@ class Enemy(pg.sprite.Sprite):
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
 
-class Road(pg.sprite.Sprite):
-    def __init__(self, col, row):
-        pg.sprite.Sprite.__init__(self)
-        self.grid_x = row * TILESIZE
-        self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/wood.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = self.grid_x
-        self.rect.y = self.grid_y
-        #self.rect.center = (self.rect.x, self.rect.y)
+    def update(self, col, row):
+        self.rect.x = row * TILESIZE
+        self.rect.y = col * TILESIZE
 
-class Wall(pg.sprite.Sprite):
+
+class Road(pg.sprite.Sprite):
     def __init__(self, col, row):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
@@ -174,15 +175,33 @@ class Wall(pg.sprite.Sprite):
         self.rect.y = self.grid_y
         #self.rect.center = (self.rect.x, self.rect.y)
 
+    def update(self, col, row):
+        self.rect.x = row * TILESIZE
+        self.rect.y = col * TILESIZE
+
+
+class Wall(pg.sprite.Sprite):
+    def __init__(self, col, row):
+        pg.sprite.Sprite.__init__(self)
+        self.grid_x = row * TILESIZE
+        self.grid_y = col * TILESIZE
+        self.image = pg.image.load('Image/wood.png')
+        self.rect = self.image.get_rect()
+        self.rect.x = self.grid_x
+        self.rect.y = self.grid_y
+        #self.rect.center = (self.rect.x, self.rect.y)
+
+    def update(self, col, row):
+        self.rect.x = row * TILESIZE
+        self.rect.y = col * TILESIZE
 
 class Player(pg.sprite.Sprite):
-
     def __init__(self,col,row, game):
         self.groups = game.explo
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         #self.image = pg.image.load(os.path.join('Image/player.png')).convert_alpha()
-        self.image = pg.image.load('Image/player.png')
+        self.image = pg.image.load('Image/char.png')
         self.rect = self.image.get_rect()
         self.rect.x = row * TILESIZE
         self.rect.y = col * TILESIZE
@@ -208,28 +227,28 @@ class Player(pg.sprite.Sprite):
     def down(self):
         self.pos_y+=40
         self.update()
-        print(self.enemy_collide())
+        #print(self.enemy_collide())
         if self.enemy_collide() == 'wall':
             self.pos_y-=40
             self.update()
     def right(self):
         self.pos_x+=40
         self.update()
-        print(self.enemy_collide())
+        #print(self.enemy_collide())
         if self.enemy_collide() == 'wall':
             self.pos_x-=40
             self.update()
     def left(self):
         self.pos_x-=40
         self.update()
-        print(self.enemy_collide())
+        #print(self.enemy_collide())
         if self.enemy_collide() == 'wall':
             self.pos_x+=40
             self.update()
     def up(self):
         self.pos_y-=40
         self.update()
-        print(self.enemy_collide())
+        #print(self.enemy_collide())
         if self.enemy_collide() == 'wall':
             self.pos_y+=40
             self.update()

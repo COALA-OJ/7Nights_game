@@ -1,7 +1,7 @@
 #base properties
 TITLE = "7Nights_game"
-WIDTH = 1500
-HEIGHT = 1000
+WIDTH = 440
+HEIGHT = 440
 FPS = 30
 TILESIZE= 40
 SCORE = 'highscore.txt'

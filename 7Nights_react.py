@@ -144,7 +144,7 @@ class Road(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
         self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/grass.png')
+        self.image = pg.image.load('Image/wood.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
@@ -155,7 +155,7 @@ class Wall(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
         self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/stone.png')
+        self.image = pg.image.load('Image/grass.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y

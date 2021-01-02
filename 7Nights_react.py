@@ -178,27 +178,44 @@ class Player(pg.sprite.Sprite):
         collide_wall = pg.sprite.spritecollide(self, self.game.wall, False)
 
         if collide_enemy:
-            print('colidge')
+            return 'colidge'
         elif collide_wall:
-            print('wall')
+            return 'wall'
+        else:
+            return 'road'
 
     def update(self):
-        self.enemy_collide()
         self.rect.x = self.pos_x
         self.rect.y = self.pos_y
 
     def down(self):
         self.pos_y+=40
         self.update()
+        print(self.enemy_collide())
+        if self.enemy_collide() == 'wall':
+            self.pos_y-=40
+            self.update()
     def right(self):
         self.pos_x+=40
         self.update()
+        print(self.enemy_collide())
+        if self.enemy_collide() == 'wall':
+            self.pos_x-=40
+            self.update()
     def left(self):
         self.pos_x-=40
         self.update()
+        print(self.enemy_collide())
+        if self.enemy_collide() == 'wall':
+            self.pos_x+=40
+            self.update()
     def up(self):
         self.pos_y-=40
         self.update()
+        print(self.enemy_collide())
+        if self.enemy_collide() == 'wall':
+            self.pos_y+=40
+            self.update()
 
 g = UserState()
 while g.start:

@@ -1,9 +1,11 @@
-import numpy as np
-
-class init_map:
-    def __init__(self, n, m):
-        #n = int(input('입력 n : '))
-        #m = int(input('입력 m : '))
-        mapnumpy = np.zeros((n,m))
+def init_map(n, m):
+     
+        maplist = []
+        for i in range(n):
+            line = []
+            for j in range(m):
+                line.append(0)
+            maplist.append(line)
+            
         
-        return mapnumpy
+        return maplist

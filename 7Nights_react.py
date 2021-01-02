@@ -5,6 +5,7 @@ class UserState:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.background = pg.display.set_mode((400,400))
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         self.running = True
@@ -18,8 +19,8 @@ class UserState:
                 self.usermap.append(line.strip('\n').split(' '))
         # self.st_x = 44
         # self.st_y = 38
-        self.st_x = 20
-        self.st_y = 15
+        self.st_x = 5
+        self.st_y = 5
 
     def new(self):
         self.all_sprites = pg.sprite.Group()
@@ -71,10 +72,14 @@ class UserState:
 
             if event.type == pg.KEYDOWN:
                 key_event = pg.key.get_pressed()
-                if key_event[pg.K_LEFT]: self.player.left()
-                elif key_event[pg.K_RIGHT]: self.player.right()
-                elif key_event[pg.K_UP]: self.player.up()
-                elif key_event[pg.K_DOWN]: self.player.down()
+                if key_event[pg.K_LEFT]:
+                    self.player.left()
+                elif key_event[pg.K_RIGHT]:
+                    self.player.right()
+                elif key_event[pg.K_UP]:
+                    self.player.up()
+                elif key_event[pg.K_DOWN]:
+                    self.player.down()
 
 
     def start_screen(self):
@@ -101,6 +106,9 @@ class UserState:
         ex) 전체 맵 중에 현재 위치 기준으로 주변 10x10 출력
         만약 가장 위쪽이여서 더이상 출력할 결과가 없다면? 유저가 이동?
         :return:
+        1.현재 캐릭터 좌표 확인
+        2.캐릭터 좌표 기준(센터)+_5 화면 출력
+        3.화면이 경계선을 넘어가면 캐릭터만 이동
         """
         self.p_lx = max(self.st_x - 5, 0)
         self.p_rx = min(self.st_x + 5, len(self.usermap))
@@ -110,8 +118,10 @@ class UserState:
         self.road.empty()
         self.wall.empty()
         self.enemys.empty()
-        for col in range(50):
-            for row in range(50):
+        self.screen.fill(WHITE)
+
+        for col in range(self.player.rect.y//40-5, self.player.rect.y//40+5):
+            for row in range(self.player.rect.x//40-5, self.player.rect.x//40+5):
                 if (col,row) in self.road_dic.keys():
                     self.road.add(self.road_dic[(col,row)])
                 elif (col,row) in self.wall_dic.keys():
@@ -119,12 +129,15 @@ class UserState:
                 elif (col, row) in self.enemys_dic.keys():
                     self.enemys.add(self.enemys_dic[(col, row)])
 
-        self.road.draw(self.screen)
-        self.wall.draw(self.screen)
-        self.enemys.draw(self.screen)
-        self.explo.draw(self.screen)
-        pg.display.update()
+        
 
+        self.road.draw(self.background)
+        self.wall.draw(self.background)
+        self.enemys.draw(self.background)
+        self.explo.draw(self.background)
+        self.screen.blit(self.background,(0,0))
+        pg.display.update()
+ 
 class Enemy(pg.sprite.Sprite):
     def __init__(self, col, row, game):
         self.game = game

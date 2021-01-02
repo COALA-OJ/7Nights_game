@@ -1,12 +1,18 @@
-import numpy as np
+def is_map_only_zero(mlist):
 
-
-class is_map_only_zero:
-    def __init__(self, mlist = []):
-        np.sum(mlist)        
-        if mlist > 0:
-            all_zero=False
-        else:
-            all_zero=True
+    count = 0
+    all_zero=True
+    
+    for x in mlist:
+        for y in x:
+            if y > 0:
+                count+=1
             
-        return all_zero
+        
+    if count > 0:
+        all_zero = False
+    else:
+        all_zero = True
+          
+        
+    return all_zero

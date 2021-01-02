@@ -76,25 +76,24 @@ class UserState:
 
     def start_screen(self):
         self.screen.fill(WHITE)
-        self.p_lx = max(self.st_x-10, 0)
-        self.p_rx = min(self.st_x+10, len(self.usermap))
-        self.p_ly = max(self.st_y-10, 0)
-        self.p_ry = min(self.st_y+10, len(self.usermap))
+        self.p_lx = max(self.st_x-5, 0)
+        self.p_rx = min(self.st_x+5, len(self.usermap))
+        self.p_ly = max(self.st_y-5, 0)
+        self.p_ry = min(self.st_y+5, len(self.usermap))
 
-        for col in range(0,10):
-            for row in range(0, 10):
+        for col in range(self.p_ly,self.p_ry):
+            for row in range(self.p_lx, self.p_ry):
                 if self.usermap[col][row] == "0":
                     road = Road(col, row)
-                    self.all_sprites.add(road)
                     self.road.add(road)
                 elif self.usermap[col][row] == "1":
                     wall = Wall(col,row)
-                    self.all_sprites.add(wall)
                     self.wall.add(wall)
 
 
+        self.road.draw(self.screen)
+        self.wall.draw(self.screen)
         self.all_sprites.draw(self.screen)
-        #self.players.draw(self.screen)
         pg.display.update()
 
     def result(self):
@@ -146,19 +145,20 @@ class Player(pg.sprite.Sprite):
         #self.rect.center = (self.pos_x, self.pos_y)
 
     def update(self):
-        self.rect.center = (self.pos_x, self.pos_y)
+        self.rect.x = self.pos_x
+        self.rect.y = self.pos_y
 
     def down(self):
-        self.pos_y+=10
+        self.pos_y+=40
         self.update()
     def right(self):
-        self.pos_x+=10
+        self.pos_x+=40
         self.update()
     def left(self):
-        self.pos_x-=10
+        self.pos_x-=40
         self.update()
     def up(self):
-        self.pos_y-=10
+        self.pos_y-=40
         self.update()
 
 g = UserState()

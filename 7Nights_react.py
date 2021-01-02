@@ -13,6 +13,9 @@ class UserState:
         self.start = True
         self.usermap = []
 
+        """
+        초기 맵 상태, 초기 유저 위치 확인인
+       """
         with open('map_file', 'r') as file:
             for line in file:
                 self.usermap.append(line.strip('\n').split(' '))
@@ -141,7 +144,7 @@ class Road(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
         self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/wood.png')
+        self.image = pg.image.load('Image/grass.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
@@ -152,7 +155,7 @@ class Wall(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
         self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/fire.png')
+        self.image = pg.image.load('Image/stone.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
@@ -187,6 +190,7 @@ class Player(pg.sprite.Sprite):
     def update(self):
         self.rect.x = self.pos_x
         self.rect.y = self.pos_y
+        self.enemy_collide()
 
     def down(self):
         self.pos_y+=40
@@ -218,8 +222,6 @@ class Player(pg.sprite.Sprite):
             self.update()
 
 g = UserState()
+
 while g.start:
     g.new()
-
-
-

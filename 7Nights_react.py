@@ -108,7 +108,7 @@ class UserState:
         :return:
         1.현재 캐릭터 좌표 확인
         2.캐릭터 좌표 기준(센터)+_5 화면 출력
-        3.화면이 경계선을 넘어가면 캐릭터만 이동
+        3.화면이 경계선을 넘어가면 캐릭터만 이동?
         """
         self.p_lx = max(self.st_x - 5, 0)
         self.p_rx = min(self.st_x + 5, len(self.usermap))

@@ -19,8 +19,8 @@ class UserState:
                 self.usermap.append(line.strip('\n').split(' '))
         # self.st_x = 44
         # self.st_y = 38
-        self.st_x = 0
-        self.st_y = 0
+        self.st_x = 20
+        self.st_y = 15
 
     def new(self):
         self.all_sprites = pg.sprite.Group()
@@ -81,8 +81,8 @@ class UserState:
         self.p_ly = max(self.st_y-10, 0)
         self.p_ry = min(self.st_y+10, len(self.usermap))
 
-        for col in range(self.p_ly,self.p_ry):
-            for row in range(self.p_lx, self.p_rx):
+        for col in range(0,10):
+            for row in range(0, 10):
                 if self.usermap[col][row] == "0":
                     road = Road(col, row)
                     self.all_sprites.add(road)
@@ -116,7 +116,7 @@ class Road(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
-        self.rect.center = (self.rect.x, self.rect.y)
+        #self.rect.center = (self.rect.x, self.rect.y)
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, col, row):
@@ -127,21 +127,23 @@ class Wall(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
-        self.rect.center = (self.rect.x, self.rect.y)
+        #self.rect.center = (self.rect.x, self.rect.y)
 
 
 class Player(pg.sprite.Sprite):
 
     def __init__(self,col,row, game):
-        #self.groups = game.player
-        pg.sprite.Sprite.__init__(self)
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         #self.image = pg.image.load(os.path.join('Image/player.png')).convert_alpha()
         self.image = pg.image.load('Image/player.png')
         self.rect = self.image.get_rect()
-        self.pos_x = row * TILESIZE
-        self.pos_y = col * TILESIZE
-        self.rect.center = (self.pos_x, self.pos_y)
+        self.rect.x = row * TILESIZE
+        self.rect.y = col * TILESIZE
+        self.pos_x = self.rect.x
+        self.pos_y = self.rect.y
+        #self.rect.center = (self.pos_x, self.pos_y)
 
     def update(self):
         self.rect.center = (self.pos_x, self.pos_y)

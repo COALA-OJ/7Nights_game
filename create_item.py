@@ -14,7 +14,6 @@ def create_item(maplist, curx, cury):
         itemlist = []
         ranlist = [0,1]
         rannum = random.randrange(1,4)
-        print(rannum)#떨어진아이템수
         
         visited = [[True, False],
                    [False, False]]
@@ -36,12 +35,9 @@ def create_item(maplist, curx, cury):
           
         visited[0][0]=False
          
-        print(visited)
-         
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,2):
             for j in range(0,2):
                 itemlist.append([])
@@ -56,7 +52,6 @@ def create_item(maplist, curx, cury):
         itemlist = []
         ranlist = [0,1]
         rannum = random.randrange(1,4)
-        print(rannum)#떨어진아이템수
         
         visited = [[True, False],
                    [False, False]]
@@ -78,12 +73,11 @@ def create_item(maplist, curx, cury):
           
         visited[0][0]=False
          
-        print(visited)
+
          
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,2):
             for j in range(0,2):
                 itemlist.append([])
@@ -98,7 +92,6 @@ def create_item(maplist, curx, cury):
         itemlist = []
         ranlist = [0,1]
         rannum = random.randrange(1,4)
-        print(rannum)#떨어진아이템수
         
         visited = [[False, False],
                    [True, False]]
@@ -119,12 +112,10 @@ def create_item(maplist, curx, cury):
           
         visited[0][0]=False
          
-        print(visited)
         
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,2):
             for j in range(0,2):
                 itemlist.append([])
@@ -139,7 +130,6 @@ def create_item(maplist, curx, cury):
         ranlistx = [0,1,2]
         ranlisty = [0,1]
         rannum = random.randrange(1,6)
-        print(rannum)#떨어진아이템수
           
           
         visited = [[False, False],
@@ -163,12 +153,10 @@ def create_item(maplist, curx, cury):
           
         visited[1][0]=False
          
-        print(visited)
 
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,3):
             for j in range(0,2):
                 itemlist.append([])
@@ -183,7 +171,6 @@ def create_item(maplist, curx, cury):
         ranlistx = [0,1]
         ranlisty = [0,1,2]
         rannum = random.randrange(1,6)
-        print(rannum)#떨어진아이템수
           
           
         visited = [[False, True, False],
@@ -205,12 +192,10 @@ def create_item(maplist, curx, cury):
           
         visited[0][1]=False
          
-        print(visited)
       
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,2):
             for j in range(0,3):
                 itemlist.append([])
@@ -226,7 +211,6 @@ def create_item(maplist, curx, cury):
         ranlistx = [0,1,2]
         ranlisty = [0,1]
         rannum = random.randrange(1,6)
-        print(rannum)#떨어진아이템수
           
           
         visited = [[False, False],
@@ -250,12 +234,10 @@ def create_item(maplist, curx, cury):
           
         visited[1][0]=False
          
-        print(visited)
   
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,3):
             for j in range(0,2):
                 itemlist.append([])
@@ -271,7 +253,6 @@ def create_item(maplist, curx, cury):
         ranlistx = [0,1,2]
         ranlisty = [0,1]
         rannum = random.randrange(1,6)
-        print(rannum)#떨어진아이템수
           
           
         visited = [[False, False, False],
@@ -293,12 +274,10 @@ def create_item(maplist, curx, cury):
           
         visited[1][0]=False
          
-        print(visited)
 
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,3):
             for j in range(0,2):
                 itemlist.append([])
@@ -312,12 +291,11 @@ def create_item(maplist, curx, cury):
         itemlist = []
         ranlist = [0,1,2]
         rannum = random.randrange(1,9)
-        print(rannum)#떨어진아이템수
           
           
         visited = [[False, False, False],
-          [False, True, False],
-          [False, False, False]]
+                   [False, True, False],
+                   [False, False, False]]
         
         tempitemlist = [[curx-1, cury-1],[curx, cury-1],[curx+1, cury-1],
                         [curx-1, cury],[curx, cury],[curx+1, cury],
@@ -336,12 +314,10 @@ def create_item(maplist, curx, cury):
           
         visited[1][1]=False
          
-        print(visited)
 
         itemlist = []
         itemcount=0
          
-        print(tempitemlist)
         for i in range(0,3):
             for j in range(0,3):
                 itemlist.append([])
@@ -353,8 +329,3 @@ def create_item(maplist, curx, cury):
     
     
     return itemlist[:rannum]
-
-
-x = 0
-y = 0
-print(create_item(x,y))

@@ -317,7 +317,7 @@ def create_item(maplist, curx, cury):
                 if maplist[curx + i][cury + j] == 1:
                     visited[i + 1][j + 1] = True
                     wallcount -= 1
-        wtemp = 4 + wallcount
+        wtemp = 6 + wallcount
         rannum = random.randrange(1, wtemp)
 
         tempitemlist = [[curx - 1, cury - 1], [curx - 1, cury],
@@ -576,9 +576,8 @@ def make_wall(list):
     mx = len(list)
     my = len(list[0])
     # 컴포넌트 갯수 설정
-    component = random.randint(10, 15)
+    component = random.randint(75, 100)
     for i in range(component):
-        print(i)
         # 1의 넓이 설정
         area = random.randint(0, 1)
 

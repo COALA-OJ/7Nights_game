@@ -33,9 +33,11 @@ def send_map_info(mob_info, user_create_info, maplist):
     user_info.append(1)
     user_info.append(0)
     data1['user_create_info'] = user_create_info
-    #while True:
-    #    resf = requests.get("http://localhost:6000/flask/send_map_info", data=json.dumps(data1)).text
-    #    if resf == True : break
+    header = {'Content-Type':'application/json'}
+    while True:
+        resf = requests.post("http://localhost:6000/flask/send_map_info", headers=header, data=json.dumps(data1)).text
+        if resf == "True" : break
+        break
     return json.dumps(data)
     # if res == "True" : return True
     # else : return False
@@ -48,6 +50,8 @@ def create_map():
         if sf.is_map_only_zero(map) :
             break
     map = sf.make_wall(map) # 개당 크기가 10 ~ 30인 컴포넌트를 10 ~ 15개 생성
+    for i in map:
+        print(i)
     map = sf.make_env(map)
     st_pos = sf.where_st_pos(map)
     mob_info = sf.get_mob_loc(map)

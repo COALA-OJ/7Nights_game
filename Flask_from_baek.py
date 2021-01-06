@@ -22,16 +22,17 @@ def index():
     print(mob, user_info)
     return "546"
     
-@app.route('/flask/send_map_info')
+@app.route('/flask/send_map_info', methods=['POST'])
 def mob_request():
-    param_dict = request.args.to_dict()
-    if len(param_dict) == 0:
+    param_dict = request.get_json()
+    if param_dict == None:
         return "no param"
-    mob = request.args['mob_info']
-    user_info = request.args['user_create_info']
+    mob = param_dict['mob_info']
+    user_info = param_dict['user_create_info']
     print(mob, user_info)
-    # res = get_fight(curx, cury)
-    # return res
+    return 'True'
+    #res = get_fight(curx, cury)
+    #return res
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ class UserState:
         """
         초기 맵 상태, 초기 유저 위치 확인인
         """
-        
+
         with open('map_file3', 'r', encoding='utf-8') as file:
             for line in file:
                 self.usermap.append(line.strip('\n').split(' '))
@@ -67,13 +67,20 @@ class UserState:
         2. 아이템을 얻었을 때
         """
         if event == 'monster':
-            self.res = send_event(pos_y, pos_x)
+            self.res = send_event(event, pos_y, pos_x)
             del(self.enemys_dic[(pos_y, pos_x)])
             item = Item(pos_y, pos_x, self)
             self.item_dic[(pos_y,pos_x)] = item
             # if self.res['f_result'] == '1':
             #     item = Item(self.res['cury'], self.res['curx'])
             #     self.item_dic[self.res['cury'], self.res['curx']] = item
+        elif event == 'item':
+            self.res = send_event(event,pos_y, pos_x)
+            del (self.item_dic[(pos_y, pos_x)])
+            road = Road(pos_y, pos_x)
+            self.road_dic[(pos_y, pos_x)] = road
+            # self.game.is_event('item', self.pos_y/40, self.pos_x/40)
+
 
     def legal_moves(self):
         for event in pg.event.get():
@@ -143,10 +150,10 @@ class UserState:
                 elif (col, row) in self.enemys_dic.keys():
                     self.enemys_dic[(col, row)].update(col - (pos_y // 40 - 5), row - (pos_x // 40 - 5))
                     self.enemys.add(self.enemys_dic[(col, row)])
-
                 elif (col, row) in self.item_dic.keys():
                     self.item_dic[(col, row)].update(col - (pos_y // 40 - 5), row - (pos_x // 40 - 5))
                     self.items.add(self.item_dic[(col, row)])
+
 
         self.road.draw(self.screen)
         self.wall.draw(self.screen)
@@ -167,6 +174,7 @@ class UserState:
                     self.enemys_dic[(col, row)].update(col, row)
                 elif (col, row) in self.item_dic.keys():
                     self.item_dic[(col, row)].update(col, row)
+              
 
 class Item(pg.sprite.Sprite):
     def __init__(self, col, row, game):
@@ -204,7 +212,7 @@ class Road(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.grid_x = row * TILESIZE
         self.grid_y = col * TILESIZE
-        self.image = pg.image.load('Image/black.png')
+        self.image = pg.image.load('Image/grass.png')
         self.rect = self.image.get_rect()
         self.rect.x = self.grid_x
         self.rect.y = self.grid_y
@@ -244,11 +252,14 @@ class Player(pg.sprite.Sprite):
     def enemy_collide(self):
         collide_enemy = pg.sprite.spritecollide(self, self.game.enemys, False)
         collide_wall = pg.sprite.spritecollide(self, self.game.wall, False)
+        collide_item = pg.sprite.spritecollide(self, self.game.items, False)
 
         if collide_enemy:
             return 'monster'
         elif collide_wall:
             return 'wall'
+        elif collide_item:
+            return 'item'
         else:
             return 'road'
 
@@ -265,6 +276,8 @@ class Player(pg.sprite.Sprite):
             self.update()
         elif self.enemy_collide() == 'monster':
             self.game.is_event('monster', self.pos_y/40, self.pos_x/40)
+        elif self.enemy_collide() == 'item':
+            self.game.is_event('item', self.pos_y/40, self.pos_x/40)
 
     def right(self):
         self.pos_x += 40
@@ -274,6 +287,8 @@ class Player(pg.sprite.Sprite):
             self.update()
         elif self.enemy_collide() == 'monster':
             self.game.is_event('monster', self.pos_y / 40, self.pos_x / 40)
+        elif self.enemy_collide() == 'item':
+            self.game.is_event('item', self.pos_y/40, self.pos_x/40)
 
     def left(self):
         self.pos_x -= 40
@@ -283,6 +298,8 @@ class Player(pg.sprite.Sprite):
             self.update()
         elif self.enemy_collide() == 'monster':
             self.game.is_event('monster',self.pos_y / 40, self.pos_x / 40)
+        elif self.enemy_collide() == 'item':
+            self.game.is_event('item', self.pos_y/40, self.pos_x/40)
 
     def up(self):
         self.pos_y -= 40
@@ -292,4 +309,6 @@ class Player(pg.sprite.Sprite):
             self.update()
         elif self.enemy_collide() == 'monster':
             self.game.is_event('monster', self.pos_y/40, self.pos_x/40)
+        elif self.enemy_collide() == 'item':
+            self.game.is_event('item', self.pos_y/40, self.pos_x/40)
 

@@ -23,13 +23,12 @@ def initiate_game():
     #     usermap+='\n'
 
 # @app.route('/react/meet_monster')
-def send_event(pos_x,pos_y):
-    data = {'user_pos_x':'', 'user_pos_y' : ''}
+def send_event(event, pos_x,pos_y):
+    data = {'w_event':'','user_pos_x':'', 'user_pos_y' : ''}
+    data['w_event'] = event
     data['user_pos_x'] =  pos_x
     data['user_pos_y'] =  pos_y
     res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=2)
-    #res = requests.get('http://127.0.0.1:5000/react/meet_monster', params=data, timeout=2)
-
     return res
 
 if __name__=='__main__':

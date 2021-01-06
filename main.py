@@ -5,7 +5,7 @@ from react import *
 import time
 #global usermap
 def initiate_game():
-    res = json.loads(requests.get("http://211.33.49.253:5000/spring/initiate_game").text)
+    res = json.loads(requests.get("http://localhost:5000/spring/initiate_game").text)
     #print(res['user_create_info'])
     """
     초기 맵 상태, 초기 유저 위치 확인인
@@ -30,7 +30,8 @@ def send_event(event, pos_x,pos_y):
     data['user_pos_x'] =  pos_x
     data['user_pos_y'] =  pos_y
     start = time.time()
-    res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=5)
+    #res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=5)
+    res = requests.get('http://localhost:5000/spring/meet_monster', params=data, timeout=5)
     end = time.time()
     print(f"time : {end-start}")
     return res

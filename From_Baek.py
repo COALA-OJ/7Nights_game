@@ -2,7 +2,7 @@
 
 import requests
 import json
-from Data import Data
+#from Data import Data
 from collections import OrderedDict, defaultdict
 
 

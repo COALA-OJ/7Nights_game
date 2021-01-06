@@ -35,7 +35,7 @@ def mob_request():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=9998)
+    app.run(debug=True, host='0.0.0.0', port=6000)
 
 # from flask import jsonify
 # #/movie/<page>로 들어오면 movie.html 리턴해주고 list에 정보가 담겨 넘어감

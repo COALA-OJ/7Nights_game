@@ -1,5 +1,5 @@
 # 7Nights_game
 
-## 🙋‍front_end study
+## Release 0.1.1
 
-* pygame을 이용한 GUI
+-   Merged react, spring, flask branch

@@ -4,7 +4,7 @@ import json
 from react import *
 #global usermap
 def initiate_game():
-    res = json.loads(requests.get("http://211.33.49.253:5000/spring/initiate_game").text)
+    res = json.loads(requests.get("http://localhost:5000/spring/initiate_game").text)
     #print(res['user_create_info'])
     """
     초기 맵 상태, 초기 유저 위치 확인인
@@ -28,7 +28,7 @@ def send_event(event, pos_x,pos_y):
     data['w_event'] = event
     data['user_pos_x'] =  pos_x
     data['user_pos_y'] =  pos_y
-    res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=2)
+    res = requests.get('http://localhost:5000/spring/meet_monster', params=data, timeout=2)
     return res
 
 if __name__=='__main__':

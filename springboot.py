@@ -48,8 +48,8 @@ def create_map():
         if sf.is_map_only_zero(map) :
             break
     while True:
-        map = tq.make_wall(map) # 개당 크기가 10 ~ 30인 컴포넌트를 10 ~ 15개 생성
-        can_go_everywhere = tq.can_conq(map) # 맵의 모든 장소를 갈 수 있는지 확인
+        map = sf.make_wall(map) # 개당 크기가 10 ~ 30인 컴포넌트를 10 ~ 15개 생성
+        can_go_everywhere = sf.can_conq(map) # 맵의 모든 장소를 갈 수 있는지 확인
         if can_go_everywhere==True:
             break
     map = sf.make_env(map)

@@ -21,7 +21,7 @@ def create_item(maplist, curx, cury):
         for i in range(0,2):
             for j in range(0,2):
                 if maplist[curx+i][cury+j]==1:
-                    visited[i+1][j+1] = True
+                    visited[i][j] = True
                     rannum-=1
                     
         tempitemlist = [[curx, cury],[curx+1, cury],
@@ -65,7 +65,7 @@ def create_item(maplist, curx, cury):
         for i in range(0,2):
             for j in range(-1,1):
                 if maplist[curx+i][cury+j]==1:
-                    visited[i+1][j+1] = True
+                    visited[i][j+1] = True
                     rannum-=1
         
         
@@ -112,7 +112,7 @@ def create_item(maplist, curx, cury):
         for i in range(-1,1):
             for j in range(0,2):
                 if maplist[curx+i][cury+j]==1:
-                    visited[i+1][j+1] = True
+                    visited[i+1][j] = True
                     rannum-=1
                     
         tempitemlist = [[curx, cury-1],[curx+1, cury-1],
@@ -208,7 +208,7 @@ def create_item(maplist, curx, cury):
         for i in range(-1,2):
             for j in range(0,2):
                 if maplist[curx+i][cury+j]==1:
-                    visited[i+1][j+1] = True
+                    visited[i+1][j] = True
                     rannum-=1
             
         tempitemlist = [[curx, cury-1],[curx+1, cury-1],
@@ -254,7 +254,7 @@ def create_item(maplist, curx, cury):
         for i in range(0,2):
             for j in range(-1,2):
                 if maplist[curx+i][cury+j]==1:
-                    visited[i+1][j+1] = True
+                    visited[i][j+1] = True
                     rannum-=1
         
         

@@ -33,9 +33,9 @@ def send_map_info(mob_info, user_create_info, maplist):
     user_info.append(1)
     user_info.append(0)
     data1['user_create_info'] = user_create_info
-    while True:
-        resf = requests.get("http://localhost:6000/flask/send_map_info", data=json.dumps(data1)).text
-        if resf == True : break
+    #while True:
+    #    resf = requests.get("http://localhost:6000/flask/send_map_info", data=json.dumps(data1)).text
+    #    if resf == True : break
     return json.dumps(data)
     # if res == "True" : return True
     # else : return False

@@ -47,11 +47,11 @@ def create_map():
         map = sf.init_map(100, 100) # 전부 0으로 1000 x 1000 2차원 list 생성
         if sf.is_map_only_zero(map) :
             break
-    # while True:
-    #     map = tq.make_wall(map) # 개당 크기가 10 ~ 30인 컴포넌트를 10 ~ 15개 생성
-    #     can_go_everywhere = tq.can_conq(map) # 맵의 모든 장소를 갈 수 있는지 확인
-    #     if can_go_everywhere==True:
-    #         break
+    while True:
+        map = tq.make_wall(map) # 개당 크기가 10 ~ 30인 컴포넌트를 10 ~ 15개 생성
+        can_go_everywhere = tq.can_conq(map) # 맵의 모든 장소를 갈 수 있는지 확인
+        if can_go_everywhere==True:
+            break
     map = sf.make_env(map)
     st_pos = sf.where_st_pos(map)
     mob_info = sf.get_mob_loc(map)

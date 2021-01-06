@@ -2,6 +2,7 @@ import requests, json, sys
 import requests
 import json
 from react import *
+import time
 #global usermap
 def initiate_game():
     res = json.loads(requests.get("http://211.33.49.253:5000/spring/initiate_game").text)
@@ -28,7 +29,10 @@ def send_event(event, pos_x,pos_y):
     data['w_event'] = event
     data['user_pos_x'] =  pos_x
     data['user_pos_y'] =  pos_y
-    res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=2)
+    start = time.time()
+    res = requests.get('http://211.33.49.253:5000/spring/meet_monster', params=data, timeout=5)
+    end = time.time()
+    print(f"time : {end-start}")
     return res
 
 if __name__=='__main__':

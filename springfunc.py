@@ -607,10 +607,10 @@ def make_wall(list):
 
         # 모든 지점을 탐색하기 위한 1이 아닌 지점 선택
         sx=0; sy=0
-        check1 = True;
+        check1 = True
         for searchx in range(mx):
             if check1 == False:
-                break;
+                break
             for searchy in range(my):
                 if temp[searchx][searchy] == 0:
                     sx = searchx; sy = searchy
